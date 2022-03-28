@@ -1,5 +1,6 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+// Hey i am adding a comment this file do this this function do thi bla bla bal
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUserSelector } from './redux/user/user.selector'

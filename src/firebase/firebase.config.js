@@ -7,8 +7,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail,
-  updatePassword,
 } from 'firebase/auth'
 import {
   doc,
@@ -22,7 +20,6 @@ import {
   arrayRemove,
   arrayUnion,
 } from 'firebase/firestore'
-// import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { store } from '../redux/store'
 
 // const firebaseConfig = {
@@ -35,15 +32,14 @@ import { store } from '../redux/store'
 //   measurementId: 'G-MV7D36GQES',
 // }
 const firebaseConfig = {
-  apiKey: "AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA",
-  authDomain: "appointment-schedular-db573.firebaseapp.com",
-  projectId: "appointment-schedular-db573",
-  storageBucket: "appointment-schedular-db573.appspot.com",
-  messagingSenderId: "794215624641",
-  appId: "1:794215624641:web:f1f637146b81e89788c940",
-  measurementId: "G-T7E82G5J0E"
+  apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
+  authDomain: 'appointment-schedular-db573.firebaseapp.com',
+  projectId: 'appointment-schedular-db573',
+  storageBucket: 'appointment-schedular-db573.appspot.com',
+  messagingSenderId: '794215624641',
+  appId: '1:794215624641:web:f1f637146b81e89788c940',
+  measurementId: 'G-T7E82G5J0E',
 }
-// Initialize Firebase
 const firebase = initializeApp(firebaseConfig)
 
 export const auth = getAuth()
@@ -79,14 +75,12 @@ export const createUserInFirestore = async (user, additionalData) => {
   const { displayName, email } = user
   const createdAt = new Date()
   const docRef = doc(db, 'users', `${user.uid}`)
-  // const appointment = doc(db, 'users', `${user.uid}`, 'appointments', )
   const docSnap = await getDoc(docRef)
 
   try {
     if (docSnap.exists()) {
       console.log('Already Exists - Not Overwrited')
     } else {
-      // doc.data() will be undefined in this case
       await setDoc(docRef, {
         displayName,
         email,
@@ -96,74 +90,11 @@ export const createUserInFirestore = async (user, additionalData) => {
         id: user.uid,
         ...additionalData,
       })
-      // return dbUser
     }
   } catch (error) {
     console.log('eoorr', error.message)
   }
   return docRef
-}
-export const fetchingUsers = async () => {
-  const dataRef = await getDocs(collection(db, 'users'))
-  let users = []
-  dataRef.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    users.push(doc.data())
-  })
-  return users
-}
-export const fetchingMessages = async () => {
-  const dataRef = await getDocs(collection(db, 'visitors'))
-  let messsages = []
-  dataRef.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    messsages.push(doc.data())
-  })
-  return messsages
-}
-export const approveDbUser = async ({ payload }) => {
-  const userRef = await doc(db, 'users', `${payload.id}`)
-  if (payload.manage) {
-    await updateDoc(userRef, {
-      approve: true,
-    })
-  } else {
-    await deleteDoc(doc(db, 'users', `${payload.id}`))
-  }
-}
-export const passwordForget = async ({ payload }) => {
-  sendPasswordResetEmail(auth, payload)
-    .then(() => {
-      alert('Password Reset Email Sent Check your mail')
-    })
-    .catch((error) => {
-      // ..
-    })
-}
-export const passwordChange = async ({ payload }) => {
-  const user = auth.currentUser
-  if (user) {
-    updatePassword(user, payload)
-      .then(() => {
-        alert('Password Changed Successfully')
-      })
-      .catch((error) => {
-        // An error ocurred
-        alert('error')
-        // ...
-      })
-  } else {
-    alert('Sign in again to change password')
-  }
-}
-export const sendMessageInDb = async (payload) => {
-  // doc.data() will be undefined in this case
-  const rand = Math.floor(Math.random() * 2.5 * 10)
-  const docRef = doc(db, 'visitors', `${rand}`)
-  await setDoc(docRef, { id: rand, ...payload })
-}
-export const deleteDbMessage = async (id) => {
-  await deleteDoc(doc(db, 'visitors', `${id}`))
 }
 
 export const deleteDbAppointment = async (appointment) => {
@@ -187,8 +118,6 @@ export const deleteDbAppointment = async (appointment) => {
     }),
   })
 }
-// Firebase User till up
-// const storage = getStorage()
 
 export const addAppointmentInDb = async (payload) => {
   let { userReducer } = store.getState()
@@ -219,7 +148,6 @@ export const gettingAppointmentsFromDb = async () => {
   )
   let appointments = []
   dataRef.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     appointments.push(doc.data())
   })
   return appointments
@@ -395,7 +323,7 @@ const hospitals = [
 
     busySlots: [],
   },
-   {
+  {
     name: 'Vaasa h',
     image_url:
       'https://d2v9ipibika81v.cloudfront.net/uploads/sites/76/USAID-1-1140x684.jpg',

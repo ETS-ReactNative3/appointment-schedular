@@ -65,13 +65,6 @@ export function* signInWithEmail({ payload }) {
     const dbUser = yield docSnap.data()
     yield put(signInSuccess(dbUser))
     yield put(gettingAppointmentsStart())
-    // if (dbUser.approve) {
-    // } else {
-    //   yield alert(
-    //     'You have successfully registerd ! Wait for Administrator to approve your registration. After approval you will be able to sign in'
-    //   )
-    //   yield signOutStart()
-    // }
   } catch (error) {
     yield put(signInFailed(error.message))
     alert(error.message)
@@ -112,48 +105,4 @@ export function* signUpStart({ payload }) {
 }
 export function* signUp() {
   yield takeLatest('SIGN_UP_START', signUpStart)
-}
-
-export function* gettingUsers() {
-  const users = yield fetchingUsers()
-  yield put(getUsers(users))
-  const messages = yield fetchingMessages()
-  yield put(commingAllMessages(messages))
-}
-export function* gettingUsersStart() {
-  yield takeLatest('GETTING_USERS_START', gettingUsers)
-}
-
-export function* approveUser(payload) {
-  try {
-    yield approveDbUser(payload)
-    yield gettingUsers()
-  } catch (err) {
-    alert(err.message)
-  }
-}
-export function* approveUserStart() {
-  yield takeLatest('APPROVE_USER', approveUser)
-}
-
-export function* forgetPassword(payload) {
-  try {
-    yield passwordForget(payload)
-  } catch (err) {
-    alert(err.message)
-  }
-}
-export function* forgetPasswordStart() {
-  yield takeLatest('FORGET_PASSWORD', forgetPassword)
-}
-
-export function* changePassword(payload) {
-  try {
-    yield passwordChange(payload)
-  } catch (err) {
-    alert(err.message)
-  }
-}
-export function* changePasswordStart() {
-  yield takeLatest('CHANGE_PASSWORD', changePassword)
 }

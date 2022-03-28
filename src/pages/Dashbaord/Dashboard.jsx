@@ -12,15 +12,12 @@ import IconButton from '@mui/material/IconButton'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-// import DashboardIcon from '@mui/icons-material/Dashboard'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import LayersIcon from '@mui/icons-material/Layers'
 import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-// import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-// import PersonIcon from '@mui/icons-material/Person'
 import { signOutStart } from '../../redux/user/user.action'
 import { currentUserSelector } from '../../redux/user/user.selector'
 import ViewAppointments from './pages/ViewAppointments'
@@ -79,7 +76,6 @@ function DashboardContent() {
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(true)
   const [view, setView] = React.useState(1)
-  // const navigate = useNavigate()
   const toggleDrawer = () => {
     setOpen(!open)
   }
@@ -119,13 +115,10 @@ function DashboardContent() {
               edge="end"
               color="inherit"
               aria-label="open drawer"
-              // onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
-                // ...(open && { display: 'none' }),
               }}
             >
-              {/* <PersonIcon /> */}
               <Typography>
                 Welcome, {user ? user.displayName : null}!
               </Typography>
@@ -157,12 +150,6 @@ function DashboardContent() {
           <Divider />
           <List component="nav">
             <React.Fragment>
-              {/* <ListItemButton>
-                <ListItemIcon>
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" className="active" />
-              </ListItemButton> */}
               <ListItemButton onClick={() => setView(1)}>
                 <ListItemIcon>
                   <BarChartIcon />
@@ -198,7 +185,6 @@ function DashboardContent() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            // marginTop: '65px',
             padding: '65px ',
           }}
         >

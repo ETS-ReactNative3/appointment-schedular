@@ -2,15 +2,10 @@ import { takeLatest, put } from 'redux-saga/effects'
 import {
   addAppointmentInDb,
   deleteDbAppointment,
-  deleteDbMessage,
   gettingAppointmentsFromDb,
   gettingHospitalsFromDb,
-  sendMessageInDb,
 } from '../../firebase/firebase.config'
-import { gettingUsers } from '../user/users.sagas'
 import {
-  sendMessageSuccess,
-  sendMessageFailed,
   addAppointmentSuccess,
   addAppointmentFailed,
   gettingAppointmentsSuccess,
@@ -25,33 +20,6 @@ import { toast } from 'react-toastify'
 let serviceId = 'service_mit8rf8'
 let templateId = 'template_r58sfcl'
 let emailUserId = 'Mu2UP1XpstqejldSf'
-export function* sendingMessage({ payload }) {
-  try {
-    yield sendMessageInDb(payload)
-    yield put(sendMessageSuccess())
-    alert('Message send successfully, We will contact you soon!')
-  } catch (e) {
-    alert(e.message)
-    yield put(sendMessageFailed())
-  }
-}
-
-export function* sendingMessageStart() {
-  yield takeLatest('SEND_MESSAGE_START', sendingMessage)
-}
-
-export function* deleteMessage({ payload }) {
-  try {
-    yield deleteDbMessage(payload)
-    yield alert('Deleted')
-    yield gettingUsers()
-  } catch (e) {
-    alert(e.message)
-  }
-}
-export function* deleteMessageStart() {
-  yield takeLatest('DELETE_MESSAGE_START', deleteMessage)
-}
 
 export function* gettingAppointments() {
   try {
@@ -67,7 +35,6 @@ export function* gettingAppointmentsStart() {
 
 export function* gettingHospitals() {
   try {
-    // yield addAppointment({ message: 'hello' })
     const hospitals = yield gettingHospitalsFromDb()
     yield put(gettingHospitalSuccess(hospitals))
   } catch (e) {

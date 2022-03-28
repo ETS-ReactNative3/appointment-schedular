@@ -1,10 +1,7 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
-// import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-// import FormControlLabel from '@mui/material/FormControlLabel'
-// import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -84,10 +81,6 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <LoadingButton
               loading={isLoading}
               loadingPosition="start"
@@ -107,11 +100,6 @@ export default function SignIn() {
               Sign in With Google
             </div>
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
               <Grid item>
                 <NavLink to="/register" variant="body2">
                   {"Don't have an account? Sign Up"}

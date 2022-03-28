@@ -51,11 +51,7 @@ function ViewAppointments() {
     }
   }, [])
   const onEventClick = React.useCallback((event) => {
-    console.log(event)
     setselectedEvent(event.event)
-    // toast({
-    //   message: event.event.title,
-    // })
   }, [])
   const renderAppointmentConfirmation = () => {
     const spanStyle = { color: '#00C853' }
@@ -102,8 +98,6 @@ function ViewAppointments() {
   }
   const handleDelete = () => {
     dispatch(deleteAppointment(selectedEvent))
-
-    // setselectedEvent(null)
   }
   const modalActions = [
     <FlatButton

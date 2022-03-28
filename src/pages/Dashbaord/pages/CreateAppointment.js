@@ -1,40 +1,27 @@
 import React, { Component } from 'react'
-// import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import moment from 'moment'
-// import DatePicker from 'material-ui/DatePicker'
 import Dialog from 'material-ui/Dialog'
-// import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import SnackBar from 'material-ui/Snackbar'
 import Card from 'material-ui/Card'
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper'
 import { RadioButton } from 'material-ui/RadioButton'
-// import axios from 'axios'
-// import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-// import SearchBar from 'material-ui-search-bar'
 import DialogTitle from '@mui/material/DialogTitle'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
-// import Dialog from '@mui/material/Dialog'
-// import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-// import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-// import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { styled, alpha } from '@mui/material/styles'
-// import { Autocomplete } from '@mui/material'
-// import { Divider } from 'material-ui'
-// import MenuItem from '@mui/material/MenuItem'
 import { connect } from 'react-redux'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
@@ -47,16 +34,12 @@ import DateAndTimePicker from '../../../components/DateAndTimePicker'
 import emailjs from '@emailjs/browser'
 import { Spinner } from '../../../components/spinner/spinner'
 
-// const API_BASE = 'http://localhost:8083/'
-
 const getUniqueListBy = (arr, key) => {
   return [...new Map(arr.map((item) => [item[key], item])).values()]
 }
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
-    // width: '100%',
-    // height: '100vh',
     padding: theme.spacing(2),
   },
   '& .MuiDialogActions-root': {
@@ -127,7 +110,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -185,9 +167,7 @@ class CreateAppointment extends Component {
     this.handleAppointmentDateAndTime =
       this.handleAppointmentDateAndTime.bind(this)
   }
-  componentDidMount() {
-    // this.props.getHospitals()
-  }
+
   handleSubmit() {
     this.setState({ confirmationModalOpen: false })
     const newAppointment = {
@@ -239,13 +219,6 @@ class CreateAppointment extends Component {
       ? this.setState({ phone: phoneNumber, validPhone: true })
       : this.setState({ validPhone: false })
   }
-  // checkDisableDate(day) {
-  //   const dateString = moment(day).format('YYYY-DD-MM')
-  //   return (
-  //     this.state.schedule[dateString] === true ||
-  //     moment(day).startOf('day').diff(moment().startOf('day')) < 0
-  //   )
-  // }
 
   handleDBReponse(response) {
     const appointments = response
@@ -474,14 +447,6 @@ class CreateAppointment extends Component {
                 ))}
             </Stack>
           </DialogContent>
-          {/* <DialogActions>
-            <Button
-              autoFocus
-              onClick={() => this.setState({ openModal: false })}
-            >
-              Save changes
-            </Button>
-          </DialogActions> */}
         </BootstrapDialog>
       </div>
     )
@@ -636,9 +601,6 @@ class CreateAppointment extends Component {
                         name="reason"
                         hintText="I want to testify"
                         floatingLabelText="Reason"
-                        // errorText={
-                        //   data.validPhone ? null : 'Enter a valid phone number'
-                        // }
                         onChange={(evt, newValue) =>
                           this.setState({ reason: newValue })
                         }
@@ -648,10 +610,6 @@ class CreateAppointment extends Component {
                         style={{ display: 'block' }}
                         name="additional_info"
                         hintText="Any other optional Reason"
-                        floatingLabelText="Additional Info"
-                        // errorText={
-                        //   data.validPhone ? null : 'Enter a valid phone number'
-                        // }
                         onChange={(evt, newValue) =>
                           this.setState({ additional_info: newValue })
                         }

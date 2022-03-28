@@ -42,8 +42,6 @@ export const userReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         error: null,
       })
-    case 'GETTING_USERS':
-      return Object.assign([], state, { users: action.payload })
     default:
       return state
   }

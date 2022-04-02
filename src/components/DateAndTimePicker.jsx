@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Popup, DatePicker } from 'react-date-time-picker-popup'
 import 'react-date-time-picker-popup/dist/index.css'
 // import '@mobiscroll/react/dist/css/mobiscroll.min.css'
@@ -8,15 +8,47 @@ import Card from 'material-ui/Card'
 //   theme: 'ios',
 //   themeVariant: 'light',
 // })
+import moment from 'moment'
+
+function useForceUpdate() {
+  const [value, setValue] = useState(0) // integer state
+  return () => setValue((value) => value + 1) // update the state to force render
+}
 
 function DateAndTimePicker({
   hospital,
   handleAppointmentDateAndTime,
   dateAndTime,
 }) {
+  const forceUpdate = useForceUpdate()
+
   const min = hospital.vaccinationPeriodStart
   const max = hospital.vaccinationPeriodEnd
+  const [disabledMins, setdisabledMins] = useState([])
+  const [disabledHours, setdisabledHours] = useState([])
   const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    hospital.busySlots.map((slot) => {
+      let slotTime = moment(slot.start).toDate()
+      let date = moment(slotTime).format('DD')
+      let hour = moment(slotTime).format('HH')
+      let minute = moment(slotTime).format('mm')
+      let selectedDate = moment(dateAndTime).format('DD')
+      let selectedHour = moment(dateAndTime).format('HH')
+      setdisabledMins([])
+      console.log(selectedDate, selectedHour, date, hour)
+      if (selectedDate == date && selectedHour == hour) {
+        var mins = disabledMins
+        mins.push(`${minute}`)
+        setdisabledMins(mins)
+      }
+      forceUpdate()
+      // console.log(selectedDate, date, time)
+    })
+  }, [dateAndTime])
+  useEffect(() => {}, [disabledMins])
+
+  console.log(disabledMins)
   // const [day, setDay] = useState(new Date())
   return (
     <Card>
@@ -28,8 +60,8 @@ function DateAndTimePicker({
         setSelectedDay={handleAppointmentDateAndTime}
         timeSelector={true}
         minuteInterval={15}
-        disabledHours={['01', '02', '03']}
-        disabledMinutes={['00', '15', '20']}
+        // disabledHours={disabledHours}
+        disabledMinutes={disabledMins}
       />
       {/* </Popup>{' '} */}
       {/* <Page className="md-calendar-booking">

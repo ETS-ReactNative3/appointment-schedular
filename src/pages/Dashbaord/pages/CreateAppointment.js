@@ -449,7 +449,6 @@ class CreateAppointment extends Component {
     )
   }
   handleAppointmentDateAndTime(e) {
-    console.log(e)
     if (e < new Date()) {
       toast.warn('This slot has passed. Select future slots')
       this.setState({ dateAndTime: '' })
@@ -538,14 +537,15 @@ class CreateAppointment extends Component {
                   : ' Choose an available day and time slot for your appointment'}
               </StepLabel>
               <StepContent>
-                <DateAndTimePicker
-                  hospital={this.state.hospital}
-                  handleAppointmentDateAndTime={
-                    this.handleAppointmentDateAndTime
-                  }
-                  dateAndTime={this.state.dateAndTime}
-                />
-
+                <div style={{ padding: '20px' }}>
+                  <DateAndTimePicker
+                    hospital={this.state.hospital}
+                    handleAppointmentDateAndTime={
+                      this.handleAppointmentDateAndTime
+                    }
+                    dateAndTime={this.state.dateAndTime}
+                  />
+                </div>
                 {this.state.dateAndTime ? this.renderStepActions(2) : null}
               </StepContent>
             </Step>

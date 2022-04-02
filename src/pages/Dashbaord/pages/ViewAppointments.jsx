@@ -1,6 +1,6 @@
 import React from 'react'
 import '@mobiscroll/react/dist/css/mobiscroll.min.css'
-import { Eventcalendar, toast } from '@mobiscroll/react'
+import { Eventcalendar } from '@mobiscroll/react'
 import moment from 'moment'
 import { gettingAppointmentsFromDb } from '../../../firebase/firebase.config'
 import { Dialog, FlatButton } from 'material-ui'
@@ -8,25 +8,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteAppointment } from '../../../redux/data/data.actions'
 import { Loading } from '../../../redux/data/data.selectors'
 import { Spinner } from '../../../components/spinner/spinner'
+const localizer = momentLocalizer(moment)
+
+import { Calendar, momentLocalizer } from 'react-big-calendar'
 function ViewAppointments() {
   const loading = useSelector(Loading)
   const dispatch = useDispatch()
-  const [myEvents, setEvents] = React.useState()
+  const [myEvents, setEvents] = React.useState([])
   const [selectedEvent, setselectedEvent] = React.useState(null)
   React.useEffect(() => {
-    gettingAppointmentsFromDb().then((res) =>
+    gettingAppointmentsFromDb().then((res) => {
       setEvents(
-        res.map((event) => ({
-          start: event.dateAndTime,
-          end: moment(event.dateAndTime).add('1h'),
-          title: event.reason,
-          ...event,
-          color: '#7bde83',
-        }))
+        res.map((event) => {
+          return {
+            start: moment(event.dateAndTime).toDate(),
+            end: moment(event.dateAndTime).add(15, 'm').toDate(),
+            // end: event.dateAndTime,
+            title: event.reason,
+            ...event,
+            color: '#7bde83',
+          }
+        })
       )
-    )
+    })
   }, [])
-  console.log(loading)
+  console.log(myEvents)
   const responsive = React.useMemo(() => {
     return {
       xsmall: {
@@ -51,7 +57,7 @@ function ViewAppointments() {
     }
   }, [])
   const onEventClick = React.useCallback((event) => {
-    setselectedEvent(event.event)
+    setselectedEvent(event)
   }, [])
   const renderAppointmentConfirmation = () => {
     const spanStyle = { color: '#00C853' }
@@ -118,7 +124,7 @@ function ViewAppointments() {
   ]
   return (
     <div>
-      <Eventcalendar
+      {/* <Eventcalendar
         theme="ios"
         themeVariant="light"
         onEventClick={onEventClick}
@@ -128,7 +134,18 @@ function ViewAppointments() {
         dragToResize={false}
         data={myEvents}
         responsive={responsive}
-      />
+      /> */}
+
+      <div className="calendar">
+        <Calendar
+          localizer={localizer}
+          events={myEvents}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }}
+          onSelectEvent={onEventClick}
+        />
+      </div>
       <Dialog
         modal={true}
         open={selectedEvent}

@@ -175,7 +175,7 @@ class CreateAppointment extends Component {
       email: this.state.email,
       phone: this.state.phone,
       // dateAndTime: moment(this.state.dateAndTime).format('YYYY-MM-DDThh:mm:ss'),
-      dateAndTime: this.state.dateAndTime,
+      dateAndTime: new Date(this.state.dateAndTime).toISOString(),
       hospital: {
         hospital_id: this.state.hospital.id,
         doctor_email: this.state.hospital.doctor.email,
@@ -375,90 +375,87 @@ class CreateAppointment extends Component {
   }
   renderHospitalsList() {
     return (
-      <div>
-        <BootstrapDialog
-          fullWidth
-          onClose={(event, reason) => {
-            if (reason !== 'backdropClick') {
-              this.setState({ openModal: false })
-            }
-          }}
-          aria-labelledby="customized-dialog-title"
-          open={this.state.openModal}
+      <BootstrapDialog
+        fullWidth
+        style={{ borderRadius: '30px' }}
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            this.setState({ openModal: false })
+          }
+        }}
+        aria-labelledby="customized-dialog-title"
+        open={this.state.openModal}
+      >
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={() => this.setState({ openModal: false })}
         >
-          <BootstrapDialogTitle
-            id="customized-dialog-title"
-            onClose={() => this.setState({ openModal: false })}
-          >
-            <Typography>
-              Pick hospital from {this.state.region || ''}
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={(e) =>
-                  this.setState({ hospitalSearch: e.target.value })
-                }
-                value={this.state.hospitalSearch}
-              />
-            </Search>
-          </BootstrapDialogTitle>
-          <DialogContent dividers>
-            <Stack direction={'row'} spacing={2}>
-              {this.props.hospitals
-                .filter(
-                  (filter) =>
-                    filter.region === this.state.region &&
-                    filter.name
-                      .toLowerCase()
-                      .includes(this.state.hospitalSearch.toLowerCase())
-                )
+          <Typography>Pick hospital from {this.state.region || ''}</Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) =>
+                this.setState({ hospitalSearch: e.target.value })
+              }
+              value={this.state.hospitalSearch}
+            />
+          </Search>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Stack direction={'row'} spacing={2}>
+            {this.props.hospitals
+              .filter(
+                (filter) =>
+                  filter.region === this.state.region &&
+                  filter.name
+                    .toLowerCase()
+                    .includes(this.state.hospitalSearch.toLowerCase())
+              )
 
-                .map((clinic) => (
-                  <Card
-                    style={{ width: '240px', cursor: 'pointer' }}
-                    onClick={() => {
-                      this.setState({ hospital: clinic, openModal: false })
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={clinic.image_url}
-                      alt="green iguana"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {clinic.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Attendants Info:
-                        <br />
-                        <b>{clinic.doctor.name}</b>
-                        <address>{clinic.doctor.email}</address>
-                        <address>{clinic.doctor.phone}</address>
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                ))}
-            </Stack>
-          </DialogContent>
-        </BootstrapDialog>
-      </div>
+              .map((clinic) => (
+                <Card
+                  style={{ width: '240px', cursor: 'pointer' }}
+                  onClick={() => {
+                    this.setState({ hospital: clinic, openModal: false })
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={clinic.image_url}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {clinic.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Attendants Info:
+                      <br />
+                      <b>{clinic.doctor.name}</b>
+                      <address>{clinic.doctor.email}</address>
+                      <address>{clinic.doctor.phone}</address>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))}
+          </Stack>
+        </DialogContent>
+      </BootstrapDialog>
     )
   }
   handleAppointmentDateAndTime(e) {
     console.log(e)
-    if (e.value < new Date()) {
+    if (e < new Date()) {
       toast.warn('This slot has passed. Select future slots')
       this.setState({ dateAndTime: '' })
     } else {
-      this.setState({ dateAndTime: e.valueText })
-      this.handleNext()
+      this.setState({ dateAndTime: e })
+      // this.handleNext()
     }
   }
   render() {
@@ -494,156 +491,148 @@ class CreateAppointment extends Component {
     ]
     return (
       <div>
-        <section
+        <div
+          className="calendar"
           style={{
-            maxWidth: !smallScreen ? '80%' : '100%',
-            margin: 'auto',
-            marginTop: !smallScreen ? 20 : 0,
+            padding: '30px',
           }}
         >
-          <Card
+          {/* <Card
+            // className="calendar"
             style={{
-              padding: '12px 12px 25px 12px',
+              // padding: '12px 12px 25px 12px',
               height: smallScreen ? '100vh' : null,
             }}
-          >
-            <Stepper
-              activeStep={stepIndex}
-              orientation="vertical"
-              linear={false}
-            >
-              <Step>
-                <StepLabel>
-                  {this.state.region
-                    ? `Region: ${this.state.region}`
-                    : 'Select the region that suits you !'}
-                </StepLabel>
-                <StepContent>
-                  {this.renderRegionSelect()}
-                  {this.state.region ? this.renderStepActions(0) : null}
-                </StepContent>
-              </Step>
+          ></Card> */}
+          <Stepper activeStep={stepIndex} orientation="vertical" linear={false}>
+            <Step>
+              <StepLabel>
+                {this.state.region
+                  ? `Region: ${this.state.region}`
+                  : 'Select the region that suits you !'}
+              </StepLabel>
+              <StepContent>
+                {this.renderRegionSelect()}
+                {this.state.region ? this.renderStepActions(0) : null}
+              </StepContent>
+            </Step>
 
-              <Step>
-                <StepLabel>
-                  {this.state.hospital
-                    ? `Hospital: ${this.state.hospital.name}`
-                    : 'Select the hospital'}
-                </StepLabel>
-                <StepContent>
-                  <Button onClick={() => this.setState({ openModal: true })}>
-                    View Hospital's
-                  </Button>{' '}
-                  {this.state.hospital ? this.renderStepActions(1) : null}
-                  {this.renderHospitalsList()}
-                </StepContent>
-              </Step>
-              <Step>
-                <StepLabel>
-                  {this.state.dateAndTime
-                    ? `Selected Slot: ${this.state.dateAndTime}`
-                    : ' Choose an available day and time slot for your appointment'}
-                </StepLabel>
-                <StepContent>
-                  <DateAndTimePicker
-                    hospital={this.state.hospital}
-                    handleAppointmentDateAndTime={
-                      this.handleAppointmentDateAndTime
-                    }
-                  />
+            <Step>
+              <StepLabel>
+                {this.state.hospital
+                  ? `Hospital: ${this.state.hospital.name}`
+                  : 'Select the hospital'}
+              </StepLabel>
+              <StepContent>
+                <Button onClick={() => this.setState({ openModal: true })}>
+                  View Hospital's
+                </Button>{' '}
+                {this.state.hospital ? this.renderStepActions(1) : null}
+                {this.renderHospitalsList()}
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>
+                {this.state.dateAndTime
+                  ? `Selected Slot: ${this.state.dateAndTime}`
+                  : ' Choose an available day and time slot for your appointment'}
+              </StepLabel>
+              <StepContent>
+                <DateAndTimePicker
+                  hospital={this.state.hospital}
+                  handleAppointmentDateAndTime={
+                    this.handleAppointmentDateAndTime
+                  }
+                  dateAndTime={this.state.dateAndTime}
+                />
 
-                  {this.state.dateAndTime ? this.renderStepActions(2) : null}
-                </StepContent>
-              </Step>
-              <Step>
-                <StepLabel>
-                  Share your contact information with us and we'll send you a
-                  reminder
-                </StepLabel>
-                <StepContent>
-                  <p>
-                    <section>
-                      <TextField
-                        style={{ display: 'block' }}
-                        name="name"
-                        hintText="John Smith"
-                        floatingLabelText="Name"
-                        onChange={(evt, newValue) =>
-                          this.setState({ name: newValue })
-                        }
-                      />
-                      <TextField
-                        style={{ display: 'block' }}
-                        name="email"
-                        hintText="youraddress@gmail.com"
-                        floatingLabelText="Email"
-                        errorText={
-                          data.validEmail ? null : 'Enter a valid email address'
-                        }
-                        onChange={(evt, newValue) =>
-                          this.validateEmail(newValue)
-                        }
-                      />
-                      <TextField
-                        style={{ display: 'block' }}
-                        name="phone"
-                        hintText="+2348995989"
-                        floatingLabelText="Phone"
-                        errorText={
-                          data.validPhone ? null : 'Enter a valid phone number'
-                        }
-                        onChange={(evt, newValue) =>
-                          this.validatePhone(newValue)
-                        }
-                      />
-                      <TextField
-                        style={{ display: 'block' }}
-                        name="reason"
-                        hintText="I want to testify"
-                        floatingLabelText="Reason"
-                        onChange={(evt, newValue) =>
-                          this.setState({ reason: newValue })
-                        }
-                        required
-                      />
-                      <TextField
-                        style={{ display: 'block' }}
-                        name="additional_info"
-                        hintText="Any other optional Reason"
-                        onChange={(evt, newValue) =>
-                          this.setState({ additional_info: newValue })
-                        }
-                      />
-                      <RaisedButton
-                        style={{
-                          display: 'block',
-                          backgroundColor: '#00C853',
-                          marginTop: 20,
-                          maxWidth: 100,
-                        }}
-                        label={
-                          contactFormFilled
-                            ? 'Schedule'
-                            : 'Fill out your information to schedule'
-                        }
-                        labelPosition="before"
-                        primary={true}
-                        fullWidth={true}
-                        onClick={() =>
-                          this.setState({
-                            confirmationModalOpen:
-                              !this.state.confirmationModalOpen,
-                          })
-                        }
-                        disabled={!contactFormFilled || data.processed}
-                      />
-                    </section>
-                  </p>
-                  {this.renderStepActions(4)}
-                </StepContent>
-              </Step>
-            </Stepper>
-          </Card>
+                {this.state.dateAndTime ? this.renderStepActions(2) : null}
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>
+                Share your contact information with us and we'll send you a
+                reminder
+              </StepLabel>
+              <StepContent>
+                <p>
+                  <section>
+                    <TextField
+                      style={{ display: 'block' }}
+                      name="name"
+                      hintText="John Smith"
+                      floatingLabelText="Name"
+                      onChange={(evt, newValue) =>
+                        this.setState({ name: newValue })
+                      }
+                    />
+                    <TextField
+                      style={{ display: 'block' }}
+                      name="email"
+                      hintText="youraddress@gmail.com"
+                      floatingLabelText="Email"
+                      errorText={
+                        data.validEmail ? null : 'Enter a valid email address'
+                      }
+                      onChange={(evt, newValue) => this.validateEmail(newValue)}
+                    />
+                    <TextField
+                      style={{ display: 'block' }}
+                      name="phone"
+                      hintText="+2348995989"
+                      floatingLabelText="Phone"
+                      errorText={
+                        data.validPhone ? null : 'Enter a valid phone number'
+                      }
+                      onChange={(evt, newValue) => this.validatePhone(newValue)}
+                    />
+                    <TextField
+                      style={{ display: 'block' }}
+                      name="reason"
+                      hintText="I want to testify"
+                      floatingLabelText="Reason"
+                      onChange={(evt, newValue) =>
+                        this.setState({ reason: newValue })
+                      }
+                      required
+                    />
+                    <TextField
+                      style={{ display: 'block' }}
+                      name="additional_info"
+                      hintText="Any other optional Reason"
+                      onChange={(evt, newValue) =>
+                        this.setState({ additional_info: newValue })
+                      }
+                    />
+                    <RaisedButton
+                      style={{
+                        display: 'block',
+                        backgroundColor: '#00C853',
+                        marginTop: 20,
+                        maxWidth: 100,
+                      }}
+                      label={
+                        contactFormFilled
+                          ? 'Schedule'
+                          : 'Fill out your information to schedule'
+                      }
+                      labelPosition="before"
+                      primary={true}
+                      fullWidth={true}
+                      onClick={() =>
+                        this.setState({
+                          confirmationModalOpen:
+                            !this.state.confirmationModalOpen,
+                        })
+                      }
+                      disabled={!contactFormFilled || data.processed}
+                    />
+                  </section>
+                </p>
+                {this.renderStepActions(4)}
+              </StepContent>
+            </Step>
+          </Stepper>
           <Dialog
             modal={true}
             open={confirmationModalOpen}
@@ -662,7 +651,7 @@ class CreateAppointment extends Component {
               this.setState({ confirmationSnackbarOpen: false })
             }
           />
-        </section>
+        </div>
         {this.props.loading ? <Spinner /> : null}
       </div>
     )

@@ -1,19 +1,38 @@
-import React from 'react'
-import '@mobiscroll/react/dist/css/mobiscroll.min.css'
-import { Datepicker, Page, setOptions } from '@mobiscroll/react'
+import React, { useState } from 'react'
+import { Popup, DatePicker } from 'react-date-time-picker-popup'
+import 'react-date-time-picker-popup/dist/index.css'
+// import '@mobiscroll/react/dist/css/mobiscroll.min.css'
+// import { Datepicker, Page, setOptions } from '@mobiscroll/react'
 import Card from 'material-ui/Card'
+// setOptions({
+//   theme: 'ios',
+//   themeVariant: 'light',
+// })
 
-setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
-})
-
-function DateAndTimePicker({ hospital, handleAppointmentDateAndTime }) {
+function DateAndTimePicker({
+  hospital,
+  handleAppointmentDateAndTime,
+  dateAndTime,
+}) {
   const min = hospital.vaccinationPeriodStart
   const max = hospital.vaccinationPeriodEnd
+  const [visible, setVisible] = useState(false)
+  // const [day, setDay] = useState(new Date())
   return (
     <Card>
-      <Page className="md-calendar-booking">
+      {/* <button onClick={() => setVisible(true)}>Show Popup</button> */}
+      {/* <Popup visible={visible} setVisible={setVisible}> */}
+      <DatePicker
+        lang="en"
+        selectedDay={dateAndTime || new Date()}
+        setSelectedDay={handleAppointmentDateAndTime}
+        timeSelector={true}
+        minuteInterval={15}
+        disabledHours={['01', '02', '03']}
+        disabledMinutes={['00', '15', '20']}
+      />
+      {/* </Popup>{' '} */}
+      {/* <Page className="md-calendar-booking">
         <Datepicker
           placeholder="Click here to select"
           responsive={{
@@ -48,7 +67,7 @@ function DateAndTimePicker({ hospital, handleAppointmentDateAndTime }) {
           cssClass="booking-datetime"
           onChange={(e) => handleAppointmentDateAndTime(e)}
         />
-      </Page>
+      </Page> */}
     </Card>
   )
 }

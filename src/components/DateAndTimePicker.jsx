@@ -36,7 +36,6 @@ function DateAndTimePicker({
       let selectedDate = moment(dateAndTime).format('DD')
       let selectedHour = moment(dateAndTime).format('HH')
       setdisabledMins([])
-      console.log(selectedDate, selectedHour, date, hour)
       if (selectedDate == date && selectedHour == hour) {
         var mins = disabledMins
         mins.push(`${minute}`)
@@ -48,7 +47,46 @@ function DateAndTimePicker({
   }, [dateAndTime])
   useEffect(() => {}, [disabledMins])
 
-  console.log(disabledMins)
+  // useEffect(() => {
+  //   hospital.busySlots.map((slot) => {
+  //     let slotStartTime = slot.start
+  //     let slotEndTime = slot.end
+
+  //     var startTime = moment(slotStartTime)
+  //     var endTime = moment(slotEndTime)
+
+  //     let date = startTime.format('DD')
+  //     let selectedDate = endTime.format('DD')
+
+  //     setdisabledMins([])
+  //     setdisabledHours([])
+
+  //     if (selectedDate == date) {
+  //       // for disabling hours
+  //       var extractedHours = []
+  //       var extractedHours
+  //       while (startTime < endTime) {
+  //         extractedHours.push(new moment(startTime).format('HH'))
+  //         startTime.add(15, 'minutes')
+  //       }
+  //       const hoursCount = {}
+  //       extractedHours.forEach(function (x) {
+  //         hoursCount[x] = (hoursCount[x] || 0) + 1
+  //       })
+  //       let finalDisablHours = []
+  //       let choteHours = []
+  //       Object.keys(hoursCount).filter((key, index) => {
+  //         hoursCount[key] == 4
+  //           ? finalDisablHours.push(key)
+  //           : choteHours.push(`${key}_${hoursCount[key]}`)
+  //       })
+  //       setdisabledHours(finalDisablHours)
+  //       // for disabling hours
+  //     }
+  //     forceUpdate()
+  //   })
+  // }, [dateAndTime])
+  // useEffect(() => {}, [disabledMins])
   // const [day, setDay] = useState(new Date())
   return (
     <Card>

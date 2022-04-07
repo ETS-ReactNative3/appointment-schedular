@@ -11,12 +11,14 @@ import SignUp from './pages/auth/SignUp'
 import Login from './pages/auth/Login'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
+import { startHospitalsSedders } from './firebase/firebase.config'
 
 function App() {
   const user = useSelector(currentUserSelector)
   const dispatch = useDispatch()
   React.useEffect(() => {
     dispatch(gettingHospitalStart())
+    // startHospitalsSedders()
   }, [])
   return (
     <div>

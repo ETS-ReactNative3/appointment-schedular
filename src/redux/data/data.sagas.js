@@ -13,6 +13,7 @@ import {
   gettingHospitalFailed,
   deleteAppointmentFailed,
   deleteAppointmentSuccess,
+  gettingHospitalStart,
 } from './data.actions'
 import emailjs from '@emailjs/browser'
 import { toast } from 'react-toastify'
@@ -88,6 +89,7 @@ export function* addAppointment({ payload }) {
       )
     yield toast.success('Appointment Createad Successfully')
     history.back()
+    yield put(gettingHospitalStart())
     yield put(addAppointmentSuccess())
 
     // yield window.location.reload()

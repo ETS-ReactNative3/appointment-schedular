@@ -32,7 +32,6 @@ function ViewAppointments() {
       )
     })
   }, [])
-  console.log(myEvents)
   const responsive = React.useMemo(() => {
     return {
       xsmall: {

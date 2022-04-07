@@ -175,7 +175,9 @@ class CreateAppointment extends Component {
       email: this.state.email,
       phone: this.state.phone,
       // dateAndTime: moment(this.state.dateAndTime).format('YYYY-MM-DDThh:mm:ss'),
-      dateAndTime: new Date(this.state.dateAndTime).toISOString(),
+      dateAndTime: moment(
+        new Date(this.state.dateAndTime).toISOString()
+      ).format('YYYY-MM-DD hh:mm A'),
       hospital: {
         hospital_id: this.state.hospital.id,
         doctor_email: this.state.hospital.doctor.email,
@@ -533,7 +535,9 @@ class CreateAppointment extends Component {
             <Step>
               <StepLabel>
                 {this.state.dateAndTime
-                  ? `Selected Slot: ${this.state.dateAndTime}`
+                  ? `Selected Slot: ${moment(this.state.dateAndTime).format(
+                      'ddd DD-MMM-YYYY, hh:mm A'
+                    )}`
                   : ' Choose an available day and time slot for your appointment'}
               </StepLabel>
               <StepContent>

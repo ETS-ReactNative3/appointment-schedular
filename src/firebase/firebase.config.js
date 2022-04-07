@@ -21,7 +21,7 @@ import {
   arrayUnion,
 } from 'firebase/firestore'
 import { store } from '../redux/store'
-
+//afraz's
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyAZe1x41vl5v6CZkPYS7Xp9sXM9Ob-peaE',
 //   authDomain: 'appointment-scheduling-94e48.firebaseapp.com',
@@ -31,6 +31,7 @@ import { store } from '../redux/store'
 //   appId: '1:298616759818:web:6905b57ee0939dc415e1f3',
 //   measurementId: 'G-MV7D36GQES',
 // }
+//walids'
 const firebaseConfig = {
   apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
   authDomain: 'appointment-schedular-db573.firebaseapp.com',
@@ -339,7 +340,7 @@ const hospitals = [
   },
 ]
 // eslint-disable-next-line
-const start = async () => {
+export const startHospitalsSedders = async () => {
   for (let i = 0; i < hospitals.length; i++) {
     const element = hospitals[i]
 
@@ -349,4 +350,3 @@ const start = async () => {
     await setDoc(docRef, { id: id.toString(), ...element })
   }
 }
-//start()

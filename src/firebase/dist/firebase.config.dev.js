@@ -20,24 +20,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var firebaseConfig = {
-  apiKey: 'AIzaSyAZe1x41vl5v6CZkPYS7Xp9sXM9Ob-peaE',
-  authDomain: 'appointment-scheduling-94e48.firebaseapp.com',
-  projectId: 'appointment-scheduling-94e48',
-  storageBucket: 'appointment-scheduling-94e48.appspot.com',
-  messagingSenderId: '298616759818',
-  appId: '1:298616759818:web:6905b57ee0939dc415e1f3',
-  measurementId: 'G-MV7D36GQES'
-}; //walids'
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
-//   authDomain: 'appointment-schedular-db573.firebaseapp.com',
-//   projectId: 'appointment-schedular-db573',
-//   storageBucket: 'appointment-schedular-db573.appspot.com',
-//   messagingSenderId: '794215624641',
-//   appId: '1:794215624641:web:f1f637146b81e89788c940',
-//   measurementId: 'G-T7E82G5J0E',
-// }
-
+  apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
+  authDomain: 'appointment-schedular-db573.firebaseapp.com',
+  projectId: 'appointment-schedular-db573',
+  storageBucket: 'appointment-schedular-db573.appspot.com',
+  messagingSenderId: '794215624641',
+  appId: '1:794215624641:web:f1f637146b81e89788c940',
+  measurementId: 'G-T7E82G5J0E'
+};
 var firebase = (0, _app.initializeApp)(firebaseConfig);
 var auth = (0, _auth.getAuth)();
 exports.auth = auth;
@@ -423,6 +413,21 @@ var hospitals = [{
   region: 'Vaasa',
   busySlots: [],
   dailyDisabledHours: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '22', '23', '24']
+}, {
+  name: 'Aonother hospital',
+  image_url: 'https://media.istockphoto.com/photos/portrait-of-male-doctor-in-white-coat-and-stethoscope-standing-in-picture-id1327024466?b=1&k=20&m=1327024466&s=170667a&w=0&h=vcw4Exhv4pkR8fMVLNXhNESaKq1HbYwJ1iElLlQBxI0=',
+  doctor: {
+    name: 'Afraz',
+    email: 'afrazmalik321@gmail.com',
+    phone: '+92 323 4242424'
+  },
+  region: 'Pakistan',
+  startDayTime: '08:00',
+  endDayTime: '17:59',
+  vaccinationPeriodStart: '2022-03-19T00:00',
+  vaccinationPeriodEnd: '2022-09-19T00:00',
+  busySlots: [],
+  dailyDisabledHours: ['00', '01', '02', '03', '04', '05', '06', '22', '23', '24']
 }]; // eslint-disable-next-line
 
 var startHospitalsSedders = function startHospitalsSedders() {

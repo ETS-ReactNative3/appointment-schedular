@@ -297,10 +297,7 @@ class CreateAppointment extends Component {
           'YYYY-DD-MM'
         )
         const time1 = moment().hour(9).minute(0).add(slot, 'hours')
-        const time2 = moment()
-          .hour(9)
-          .minute(0)
-          .add(slot + 1, 'hours')
+        const time2 = moment().hour(9).minute(0)
         const scheduleDisabled = this.state.schedule[appointmentDateString]
           ? this.state.schedule[
               moment(this.state.appointmentDate).format('YYYY-DD-MM')
@@ -454,10 +451,19 @@ class CreateAppointment extends Component {
     if (e < new Date()) {
       toast.warn('This slot has passed. Select future slots')
       this.setState({ dateAndTime: '' })
-    } else {
-      this.setState({ dateAndTime: e })
-      // this.handleNext()
+      return
     }
+    if (
+      this.state.hospital.busySlots.includes(
+        moment(e).format('YYYY-MM-DD hh:mm A')
+      )
+    ) {
+      this.setState({ dateAndTime: moment(e).add('15', 'm').toDate() })
+      return
+    }
+
+    this.setState({ dateAndTime: e })
+    // this.handleNext()
   }
   render() {
     const {

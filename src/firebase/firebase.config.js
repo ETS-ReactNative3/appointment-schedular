@@ -22,25 +22,25 @@ import {
 } from 'firebase/firestore'
 import { store } from '../redux/store'
 //afraz's
-const firebaseConfig = {
-  apiKey: 'AIzaSyAZe1x41vl5v6CZkPYS7Xp9sXM9Ob-peaE',
-  authDomain: 'appointment-scheduling-94e48.firebaseapp.com',
-  projectId: 'appointment-scheduling-94e48',
-  storageBucket: 'appointment-scheduling-94e48.appspot.com',
-  messagingSenderId: '298616759818',
-  appId: '1:298616759818:web:6905b57ee0939dc415e1f3',
-  measurementId: 'G-MV7D36GQES',
-}
-//walids'
 // const firebaseConfig = {
-//   apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
-//   authDomain: 'appointment-schedular-db573.firebaseapp.com',
-//   projectId: 'appointment-schedular-db573',
-//   storageBucket: 'appointment-schedular-db573.appspot.com',
-//   messagingSenderId: '794215624641',
-//   appId: '1:794215624641:web:f1f637146b81e89788c940',
-//   measurementId: 'G-T7E82G5J0E',
+//   apiKey: 'AIzaSyAZe1x41vl5v6CZkPYS7Xp9sXM9Ob-peaE',
+//   authDomain: 'appointment-scheduling-94e48.firebaseapp.com',
+//   projectId: 'appointment-scheduling-94e48',
+//   storageBucket: 'appointment-scheduling-94e48.appspot.com',
+//   messagingSenderId: '298616759818',
+//   appId: '1:298616759818:web:6905b57ee0939dc415e1f3',
+//   measurementId: 'G-MV7D36GQES',
 // }
+//walids'
+const firebaseConfig = {
+  apiKey: 'AIzaSyAVdpfk7A7KAPifC9E1wQ4UXwgTWGS3LoA',
+  authDomain: 'appointment-schedular-db573.firebaseapp.com',
+  projectId: 'appointment-schedular-db573',
+  storageBucket: 'appointment-schedular-db573.appspot.com',
+  messagingSenderId: '794215624641',
+  appId: '1:794215624641:web:f1f637146b81e89788c940',
+  measurementId: 'G-T7E82G5J0E',
+}
 const firebase = initializeApp(firebaseConfig)
 
 export const auth = getAuth()

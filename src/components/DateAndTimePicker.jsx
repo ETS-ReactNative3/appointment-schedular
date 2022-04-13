@@ -63,7 +63,7 @@ function DateAndTimePicker({
       let selectedHour = moment(dateAndTime).format('HH')
 
       setdisabledMins([])
-      setdisabledHours(hospital.dailyDisabledHours)
+      setdisabledHours(hospital.dailyDisabledHours || [])
       if (selectedDate == date) {
         // for disabling hours
         var extractedTime = []

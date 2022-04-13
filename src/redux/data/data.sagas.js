@@ -88,7 +88,7 @@ export function* addAppointment({ payload }) {
         }
       )
     yield toast.success('Appointment Createad Successfully')
-    history.back()
+    // history.back()
     yield put(gettingHospitalStart())
     yield put(addAppointmentSuccess())
 
